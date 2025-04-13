@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ClipContext</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>ClipContext</h1>
+      <div class="header-actions">
+        <button id="settingsBtn" class="icon-button" title="Settings">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"></circle>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <div class="search-container">
+      <input type="text" id="searchInput" placeholder="Search clipboard history...">
+      <button id="filterBtn" class="icon-button" title="Filter">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+        </svg>
+      </button>
+    </div>
+
+    <div id="filterPanel" class="filter-panel hidden">
+      <div class="filter-section">
+        <h3>Category</h3>
+        <div class="checkbox-group">
+          <label><input type="checkbox" name="category" value="Code Snippet" checked> Code Snippet</label>
+          <label><input type="checkbox" name="category" value="URL" checked> URL</label>
+          <label><input type="checkbox" name="category" value="Email Address" checked> Email Address</label>
+          <label><input type="checkbox" name="category" value="Phone Number" checked> Phone Number</label>
+          <label><input type="checkbox" name="category" value="Physical Address" checked> Physical Address</label>
+          <label><input type="checkbox" name="category" value="Quote" checked> Quote</label>
+          <label><input type="checkbox" name="category" value="Image" checked> Image</label>
+          <label><input type="checkbox" name="category" value="Plain Text" checked> Plain Text</label>
+          <label><input type="checkbox" name="category" value="Uncategorized" checked> Uncategorized</label>
+        </div>
+      </div>
+      
+      <div class="filter-section">
+        <h3>Content Type</h3>
+        <div class="checkbox-group">
+          <label><input type="checkbox" name="contentType" value="text" checked> Text</label>
+          <label><input type="checkbox" name="contentType" value="image" checked> Image</label>
+        </div>
+      </div>
+      
+      <div class="filter-section">
+        <h3>Date Range</h3>
+        <select id="dateRangeSelect">
+          <option value="all">All Time</option>
+          <option value="today">Today</option>
+          <option value="yesterday">Yesterday</option>
+          <option value="week">Last 7 Days</option>
+          <option value="month">Last 30 Days</option>
+          <option value="custom">Custom Range</option>
+        </select>
+        <div id="customDateRange" class="custom-date-range hidden">
+          <input type="date" id="startDate">
+          <input type="date" id="endDate">
+        </div>
+      </div>
+      
+      <div class="filter-section">
+        <h3>Source</h3>
+        <select id="domainSelect">
+          <option value="">All Sources</option>
+          <!-- Will be populated dynamically -->
+        </select>
+      </div>
+      
+      <div class="filter-section">
+        <label class="favorites-filter">
+          <input type="checkbox" id="favoritesOnly"> Show Favorites Only
+        </label>
+      </div>
+      
+      <div class="filter-actions">
+        <button id="applyFiltersBtn" class="primary-button">Apply Filters</button>
+        <button id="resetFiltersBtn" class="secondary-button">Reset</button>
+      </div>
+    </div>
+
+    <div id="clipboardItems" class="clipboard-items">
+      <div class="loading-indicator">
+        <div class="spinner"></div>
+        <p>Loading clipboard history...</p>
+      </div>
+    </div>
+
+    <div id="emptyState" class="empty-state hidden">
+      <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
+        <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
+      </svg>
+      <p>No clipboard items found</p>
+      <p class="empty-state-subtitle">Copy something in your browser to see it here</p>
+    </div>
+
+    <div id="errorState" class="error-state hidden">
+      <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"></circle>
+        <line x1="12" y1="8" x2="12" y2="12"></line>
+        <line x1="12" y1="16" x2="12.01" y2="16"></line>
+      </svg>
+      <p>Could not connect to clipboard service</p>
+      <p class="error-state-subtitle">Please check if the backend server is running</p>
+      <button id="retryBtn" class="primary-button">Retry</button>
+    </div>
+  </div>
+
+  <!-- Toast notification -->
+  <div id="toast" class="toast hidden"></div>
+
+  <!-- Item detail modal -->
+  <div id="itemDetailModal" class="modal hidden">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Clipboard Item</h2>
+        <button id="closeModalBtn" class="icon-button">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="item-source">
+          <img id="modalFavicon" class="favicon" src="" alt="">
+          <a id="modalSourceUrl" href="#" target="_blank"></a>
+        </div>
+        <div class="item-meta">
+          <span id="modalCategory" class="category-tag"></span>
+          <span id="modalTimestamp" class="timestamp"></span>
+        </div>
+        <div id="modalContent" class="item-content"></div>
+      </div>
+      <div class="modal-footer">
+        <button id="modalCopyBtn" class="primary-button">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+          </svg>
+          Copy
+        </button>
+        <button id="modalFavoriteBtn" class="secondary-button">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+          </svg>
+          Add to Favorites
+        </button>
+        <button id="modalDeleteBtn" class="danger-button">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="3 6 5 6 21 6"></polyline>
+            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+            <line x1="10" y1="11" x2="10" y2="17"></line>
+            <line x1="14" y1="11" x2="14" y2="17"></line>
+          </svg>
+          Delete
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Delete confirmation modal -->
+  <div id="deleteConfirmModal" class="modal hidden">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Confirm Delete</h2>
+        <button id="closeDeleteConfirmBtn" class="icon-button">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure you want to delete this clipboard item?</p>
+        <p>This action cannot be undone.</p>
+      </div>
+      <div class="modal-footer">
+        <button id="cancelDeleteBtn" class="secondary-button">Cancel</button>
+        <button id="confirmDeleteBtn" class="danger-button">Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

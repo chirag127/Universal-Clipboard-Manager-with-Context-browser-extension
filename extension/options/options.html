@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ClipContext Settings</title>
+  <link rel="stylesheet" href="options.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>ClipContext Settings</h1>
+      <p>Configure your clipboard manager preferences</p>
+    </header>
+
+    <main>
+      <section class="settings-section">
+        <h2>General Settings</h2>
+        
+        <div class="setting-item">
+          <div class="setting-info">
+            <h3>Enable Clipboard Monitoring</h3>
+            <p>Automatically capture items copied in your browser</p>
+          </div>
+          <div class="setting-control">
+            <label class="switch">
+              <input type="checkbox" id="enableMonitoring" checked>
+              <span class="slider"></span>
+            </label>
+          </div>
+        </div>
+        
+        <div class="setting-item">
+          <div class="setting-info">
+            <h3>AI Categorization</h3>
+            <p>Use AI to automatically categorize clipboard content</p>
+          </div>
+          <div class="setting-control">
+            <label class="switch">
+              <input type="checkbox" id="enableAI" checked>
+              <span class="slider"></span>
+            </label>
+          </div>
+        </div>
+      </section>
+
+      <section class="settings-section">
+        <h2>Data Retention</h2>
+        
+        <div class="setting-item">
+          <div class="setting-info">
+            <h3>Maximum Items</h3>
+            <p>Limit the number of clipboard items to store</p>
+          </div>
+          <div class="setting-control">
+            <select id="maxItems">
+              <option value="100">100 items</option>
+              <option value="500" selected>500 items</option>
+              <option value="1000">1,000 items</option>
+              <option value="5000">5,000 items</option>
+              <option value="0">Unlimited</option>
+            </select>
+          </div>
+        </div>
+        
+        <div class="setting-item">
+          <div class="setting-info">
+            <h3>Maximum Age</h3>
+            <p>Automatically delete items older than this</p>
+          </div>
+          <div class="setting-control">
+            <select id="maxDays">
+              <option value="1">1 day</option>
+              <option value="7">7 days</option>
+              <option value="30" selected>30 days</option>
+              <option value="90">90 days</option>
+              <option value="0">Never delete</option>
+            </select>
+          </div>
+        </div>
+      </section>
+
+      <section class="settings-section">
+        <h2>Data Management</h2>
+        
+        <div class="setting-item">
+          <div class="setting-info">
+            <h3>Clear Clipboard History</h3>
+            <p>Delete all your clipboard history</p>
+          </div>
+          <div class="setting-control">
+            <button id="clearHistoryBtn" class="danger-button">Clear History</button>
+          </div>
+        </div>
+        
+        <div class="setting-item">
+          <div class="setting-info">
+            <h3>Export Data</h3>
+            <p>Export your clipboard history as JSON</p>
+          </div>
+          <div class="setting-control">
+            <button id="exportDataBtn" class="primary-button">Export</button>
+          </div>
+        </div>
+        
+        <div class="setting-item">
+          <div class="setting-info">
+            <h3>Import Data</h3>
+            <p>Import clipboard history from a JSON file</p>
+          </div>
+          <div class="setting-control">
+            <label for="importFile" class="file-input-label">Choose File</label>
+            <input type="file" id="importFile" accept=".json" class="file-input">
+          </div>
+        </div>
+      </section>
+
+      <section class="settings-section">
+        <h2>Account Information</h2>
+        
+        <div class="setting-item">
+          <div class="setting-info">
+            <h3>Anonymous User ID</h3>
+            <p>Your unique identifier for this extension</p>
+          </div>
+          <div class="setting-control user-id-container">
+            <input type="text" id="userId" readonly>
+            <button id="copyUserIdBtn" class="icon-button" title="Copy to clipboard">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section class="settings-section">
+        <h2>About</h2>
+        
+        <div class="about-content">
+          <p><strong>ClipContext</strong> - Universal Clipboard Manager with Context</p>
+          <p>Version 1.0.0</p>
+          <p>Created by Chirag Singhal</p>
+          <p><a href="#" id="privacyPolicyLink">Privacy Policy</a></p>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <button id="saveSettingsBtn" class="primary-button">Save Settings</button>
+    </footer>
+  </div>
+
+  <!-- Clear history confirmation modal -->
+  <div id="clearHistoryModal" class="modal hidden">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Clear Clipboard History</h2>
+        <button id="closeClearHistoryModalBtn" class="icon-button">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure you want to clear your entire clipboard history?</p>
+        <p>This action cannot be undone.</p>
+        
+        <div class="checkbox-container">
+          <label>
+            <input type="checkbox" id="keepFavorites">
+            Keep favorited items
+          </label>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="cancelClearHistoryBtn" class="secondary-button">Cancel</button>
+        <button id="confirmClearHistoryBtn" class="danger-button">Clear History</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Privacy policy modal -->
+  <div id="privacyPolicyModal" class="modal hidden">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Privacy Policy</h2>
+        <button id="closePrivacyPolicyModalBtn" class="icon-button">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      <div class="modal-body privacy-policy">
+        <h3>ClipContext Privacy Policy</h3>
+        <p>Last updated: April 14, 2024</p>
+        
+        <h4>1. Information We Collect</h4>
+        <p>ClipContext collects the following information:</p>
+        <ul>
+          <li>Content you copy to your clipboard while browsing</li>
+          <li>The URL and title of the webpage where the copy action occurred</li>
+          <li>Timestamps of when items were copied</li>
+        </ul>
+        
+        <h4>2. How We Use Your Information</h4>
+        <p>We use this information solely to provide the clipboard history functionality of the extension. Specifically:</p>
+        <ul>
+          <li>To display your clipboard history in the extension popup</li>
+          <li>To categorize content using AI for better organization</li>
+          <li>To enable searching and filtering of your clipboard history</li>
+        </ul>
+        
+        <h4>3. Data Storage</h4>
+        <p>Your clipboard data is stored:</p>
+        <ul>
+          <li>On our servers, associated with an anonymous user ID</li>
+          <li>This ID is randomly generated and not linked to any personally identifiable information</li>
+        </ul>
+        
+        <h4>4. Data Sharing</h4>
+        <p>We do not share your clipboard data with any third parties except:</p>
+        <ul>
+          <li>When using the AI categorization feature, text content is sent to Google's Gemini AI API for categorization purposes only</li>
+        </ul>
+        
+        <h4>5. Your Rights</h4>
+        <p>You have the right to:</p>
+        <ul>
+          <li>Disable clipboard monitoring at any time</li>
+          <li>Clear your clipboard history</li>
+          <li>Export your data</li>
+          <li>Disable AI categorization</li>
+        </ul>
+        
+        <h4>6. Security</h4>
+        <p>We implement reasonable security measures to protect your clipboard data from unauthorized access or disclosure.</p>
+        
+        <h4>7. Changes to This Policy</h4>
+        <p>We may update this privacy policy from time to time. We will notify you of any changes by posting the new privacy policy in the extension.</p>
+        
+        <h4>8. Contact Us</h4>
+        <p>If you have any questions about this privacy policy, please contact us at [contact email].</p>
+      </div>
+      <div class="modal-footer">
+        <button id="closePrivacyPolicyBtn" class="primary-button">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast notification -->
+  <div id="toast" class="toast hidden"></div>
+
+  <script src="options.js"></script>
+</body>
+</html>

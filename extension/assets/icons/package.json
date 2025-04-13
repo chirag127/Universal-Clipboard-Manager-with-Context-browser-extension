@@ -1,0 +1,12 @@
+{
+  "name": "clipcontext-icons",
+  "version": "1.0.0",
+  "description": "Icon generator for ClipContext extension",
+  "main": "icon_generator.js",
+  "scripts": {
+    "generate": "node icon_generator.js"
+  },
+  "dependencies": {
+    "canvas": "^2.11.2"
+  }
+}
