@@ -1,40 +1,80 @@
-<!--
-Thank you for contributing to ClipContext! Before submitting this pull request, please:
+# Pull Request Template
 
-1.  **Read the Contribution Guidelines:** Ensure you understand our coding standards, testing procedures, and commit message format. (See `.github/CONTRIBUTING.md`)
-2.  **Create a Branch:** Create your branch from the `main` branch.
-3.  **Test Thoroughly:** Test your changes.
-4.  **Describe Your Changes:** Provide a clear, concise description of your changes.
-5.  **Include Tests:** Add or update tests to cover your changes.
-6.  **Update Documentation:** Update any relevant documentation.
+**Please follow the [Apex Technical Authority standards](https://github.com/your-org/your-repo/blob/main/README.md#development-standards) for all contributions.**
 
--->
+**Before submitting your PR, please ensure:**
 
-## Pull Request Checklist
+-   [ ] Your code adheres to the **Apex Toolchain** for JavaScript/TypeScript extensions.
+-   [ ] All tests in the `tests/` directory pass.
+-   [ ] The codebase has been linted and formatted by Biome.
+-   [ ] The code includes comprehensive tests (100% branch coverage target).
+-   [ ] Your commit messages follow **Conventional Commits**.
+-   [ ] You have updated the **README.md** to reflect any significant changes.
 
--   [ ] I have read the [Contribution Guidelines](.github/CONTRIBUTING.md).
--   [ ] My code follows the project's coding standards.
--   [ ] My changes are covered by tests.
--   [ ] All tests pass.
--   [ ] I have updated any necessary documentation.
--   [ ] My commit messages follow the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) guidelines.
+--- ---
 
-## Description of Changes
+## 1. PR Title
 
-<!-- Describe your changes in detail. -->
+Provide a concise and descriptive title. Use **Conventional Commits** format.
 
-## Related Issues
+*   **Example:** `feat: Implement AI-powered content categorization`
+*   **Example:** `fix: Resolve issue with history persistence on browser restart`
 
-<!-- List any related issues this pull request addresses, e.g., "Fixes #123". -->
+--- ---
 
-## Testing
+## 2. Description
 
-<!-- Describe how you tested your changes. Include any steps to reproduce the tests. -->
+**What does this PR do?**
 
-## Screenshots/Videos (if applicable)
+*   Provide a clear, concise summary of the changes.
+*   Explain the problem this PR solves and how.
+*   Link to any relevant issues (e.g., `Closes #123`).
 
-<!-- Include screenshots or videos to demonstrate your changes. -->
+**Why is this change necessary?**
 
-## Additional Notes
+*   Justify the need for this modification.
 
-<!-- Add any other notes or context about your changes. -->
+**How was this tested?**
+
+*   Describe the testing approach: unit tests, e2e tests, manual testing.
+*   Mention specific test cases or scenarios covered.
+
+**Screenshots/GIFs (Optional but Recommended):**
+
+*   Include visual evidence of the changes, especially for UI modifications.
+
+--- ---
+
+## 3. Checklist
+
+*   [ ] I have read the **Contributing Guidelines**.
+*   [ ] My code follows the **Apex Technical Authority** standards.
+*   [ ] I have performed a self-review of my own code.
+*   [ ] I have commented my code, particularly in hard-to-understand areas.
+*   [ ] I have made corresponding changes to the documentation.
+*   [ ] My changes generate no new warnings or errors (linters, tests, console).
+*   [ ] I have updated the relevant **GitHub Actions** workflows if applicable.
+*   [ ] I have ensured no sensitive information is committed.
+*   [ ] I have added or updated unit tests for new functionality or bug fixes.
+*   [ ] I have added or updated e2e tests for critical user flows.
+
+--- ---
+
+## 4. AI Agent Directives (For Future Automation)
+
+This repository operates under the **Apex Technical Authority** framework. Key directives include:
+
+*   **Language:** JavaScript (with potential for TypeScript adoption).
+*   **Environment:** Browser Extension (Chrome, Firefox, etc.).
+*   **Core Stack:** Vite, Browser Extension APIs.
+*   **Linting/Formatting:** Biome.
+*   **Testing:** Vitest (Unit), Playwright (E2E).
+*   **Architecture:** Modular, Feature-First structure; adherence to SOLID principles.
+*   **AI Integration:** Leverages AI for content categorization and context awareness. Model selection follows the **Gemini Protocol Fallback Cascade** if applicable.
+*   **Build/CI:** GitHub Actions for linting, testing, and deployment.
+*   **Security:** OWASP Top 10 2025 principles, input sanitization.
+*   **UI/UX:** Hyper-configurable, fluid animations, responsive design.
+
+--- ---
+
+**Thank you for contributing to ClipContext!**
