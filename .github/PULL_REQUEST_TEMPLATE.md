@@ -1,80 +1,64 @@
-# Pull Request Template
+# Pull Request Template for ClipContext-AI-Powered-Clipboard-Manager-Browser-Extension
 
-**Please follow the [Apex Technical Authority standards](https://github.com/your-org/your-repo/blob/main/README.md#development-standards) for all contributions.**
+## 1. 🚀 PR Overview & Context
 
-**Before submitting your PR, please ensure:**
+**Before submitting, ensure you have:**
+1.  Run all local linters/formatters (`npm run format`).
+2.  Executed all unit tests (`npm run test:unit`).
+3.  Updated documentation (`README.md`, `AGENTS.md`) if necessary.
+4.  Adhered to the Conventional Commits specification.
 
--   [ ] Your code adheres to the **Apex Toolchain** for JavaScript/TypeScript extensions.
--   [ ] All tests in the `tests/` directory pass.
--   [ ] The codebase has been linted and formatted by Biome.
--   [ ] The code includes comprehensive tests (100% branch coverage target).
--   [ ] Your commit messages follow **Conventional Commits**.
--   [ ] You have updated the **README.md** to reflect any significant changes.
+**Type of Change:** (Check all that apply)
 
---- ---
+- [ ] `feat`: A new feature (non-breaking change which introduces new functionality).
+- [ ] `fix`: A bug fix (non-breaking change which fixes an issue).
+- [ ] `docs`: Documentation only changes.
+- [ ] `style`: Code style changes (formatting, missing semicolons, etc.).
+- [ ] `refactor`: A code change that neither fixes a bug nor adds a feature.
+- [ ] `perf`: A code change that improves performance.
+- [ ] `test`: Adding missing tests or correcting existing tests.
+- [ ] `chore`: Changes to the build process or auxiliary tools and libraries (e.g., updating dependencies).
 
-## 1. PR Title
+## 2. 🧠 Architectural Alignment & Verification
 
-Provide a concise and descriptive title. Use **Conventional Commits** format.
+This PR must align with the **Apex Technical Authority** principles (SOLID, DRY, Self-Documenting Code).
 
-*   **Example:** `feat: Implement AI-powered content categorization`
-*   **Example:** `fix: Resolve issue with history persistence on browser restart`
+### What does this PR do?
+<!-- Describe the core purpose and motivation for this change. Link to related issues if applicable. -->
 
---- ---
+### Critical Architectural Considerations
 
-## 2. Description
+- [ ] **CQS Adherence:** Does this PR introduce new Commands or Queries? Are they clearly separated?
+- [ ] **Guard Clauses Used:** Have complex nesting been replaced with early returns?
+- [ ] **Error Handling:** Is all I/O wrapped for resilience? (Fail Fast/Recovery Logic).
+- [ ] **Performance:** Does this PR adhere to the INP < 200ms goal? (Especially relevant for AI/clipboard operations).
 
-**What does this PR do?**
+## 3. Testing Strategy
 
-*   Provide a clear, concise summary of the changes.
-*   Explain the problem this PR solves and how.
-*   Link to any relevant issues (e.g., `Closes #123`).
+Detail how this change was verified. Since this is a **Browser Extension (TS/Vite)** project, verification should cover UI interaction and background service worker logic.
 
-**Why is this change necessary?**
+- [ ] **Unit Tests:** Were new unit tests added/updated in `tests/unit/`?
+- [ ] **E2E Tests:** Were necessary integration paths covered in `tests/e2e/` (Playwright)?
+- [ ] **Manual QA Steps:** (If applicable, provide steps for reviewer to test specific functionality)
 
-*   Justify the need for this modification.
+markdown
+<!-- Reviewer Steps -->
+1. Navigate to Extension Popup.
+2. Copy item X.
+3. Verify item X appears in history with correct AI tag.
 
-**How was this tested?**
 
-*   Describe the testing approach: unit tests, e2e tests, manual testing.
-*   Mention specific test cases or scenarios covered.
+## 4. Documentation Impact
 
-**Screenshots/GIFs (Optional but Recommended):**
+- [ ] `README.md` updated to reflect new functionality/features (if applicable).
+- [ ] `AGENTS.md` reviewed for necessary technology stack updates (if dependencies changed).
+- [ ] **Security:** Were any new external integrations added that require input sanitization (OWASP compliance)?
 
-*   Include visual evidence of the changes, especially for UI modifications.
+---
 
---- ---
+**Self-Review Checklist (Apex Standard):**
 
-## 3. Checklist
-
-*   [ ] I have read the **Contributing Guidelines**.
-*   [ ] My code follows the **Apex Technical Authority** standards.
-*   [ ] I have performed a self-review of my own code.
-*   [ ] I have commented my code, particularly in hard-to-understand areas.
-*   [ ] I have made corresponding changes to the documentation.
-*   [ ] My changes generate no new warnings or errors (linters, tests, console).
-*   [ ] I have updated the relevant **GitHub Actions** workflows if applicable.
-*   [ ] I have ensured no sensitive information is committed.
-*   [ ] I have added or updated unit tests for new functionality or bug fixes.
-*   [ ] I have added or updated e2e tests for critical user flows.
-
---- ---
-
-## 4. AI Agent Directives (For Future Automation)
-
-This repository operates under the **Apex Technical Authority** framework. Key directives include:
-
-*   **Language:** JavaScript (with potential for TypeScript adoption).
-*   **Environment:** Browser Extension (Chrome, Firefox, etc.).
-*   **Core Stack:** Vite, Browser Extension APIs.
-*   **Linting/Formatting:** Biome.
-*   **Testing:** Vitest (Unit), Playwright (E2E).
-*   **Architecture:** Modular, Feature-First structure; adherence to SOLID principles.
-*   **AI Integration:** Leverages AI for content categorization and context awareness. Model selection follows the **Gemini Protocol Fallback Cascade** if applicable.
-*   **Build/CI:** GitHub Actions for linting, testing, and deployment.
-*   **Security:** OWASP Top 10 2025 principles, input sanitization.
-*   **UI/UX:** Hyper-configurable, fluid animations, responsive design.
-
---- ---
-
-**Thank you for contributing to ClipContext!**
+- [ ] Code is self-documenting (Zero unnecessary comments).
+- [ ] Configuration resides in environment/settings, not hardcoded.
+- [ ] All imports are clean and comply with FSD structure.
+- [ ] PR Title follows Conventional Commits format (`<type>: <subject>`).
