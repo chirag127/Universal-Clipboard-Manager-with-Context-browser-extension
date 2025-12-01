@@ -1,11 +1,37 @@
-node_modules/
-dist/
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
 build/
-.DS_Store
+dist/
+*.egg-info/
+venv/
+.venv/
+env/
 .env
+
+# Ruff
+.ruff_cache/
+
+# Pytest
+.pytest_cache/
+
+# IDE/Editor
 .vscode/
-*.log
-*.tmp
-*.bak
-coverage/
-.turbo/
+.idea/
+*.swp
+*.swo
+
+# OS Generated files
+.DS_Store
+Thumbs.db
+
+# Secrets (if any managed locally via env files)
+.envrc
+
+# VS Code specific
+.vscode/
+
+# Jupyter Notebook
+.ipynb_checkpoints/
